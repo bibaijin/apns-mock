@@ -1,0 +1,19 @@
+appname: apns-mock
+
+build:
+  base: golang:1.8
+  prepare:
+    version: 201705271457
+    script:
+      - go run $(go env GOROOT)/src/crypto/tls/generate_cert.go --host apns-mock.lain.local  # 生成自签名证书（`key.pem` 和 `cert.pem`）
+      - mv cert.pem key.pem /
+  script:
+    - mkdir -p $GOPATH/src/github.com/bibaijin/apns-mock/
+    - cp -rf . $GOPATH/src/github.com/bibaijin/apns-mock
+    - cd $GOPATH/src/github.com/bibaijin/apns-mock/ && go install
+    - mv $GOPATH/bin/apns-mock /apns-mock
+
+web:
+  cmd: /apns-mock -port=8080
+  port: 8080
+  healthcheck: "/ping"

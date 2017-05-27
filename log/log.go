@@ -15,8 +15,9 @@ const (
 type requestIDKeyType string
 
 var (
-	errLogger    *log.Logger
-	infoLogger   *log.Logger
+	errLogger  *log.Logger
+	infoLogger *log.Logger
+	// RequestIDKey 表示请求 ID 的键名
 	RequestIDKey = requestIDKeyType("RequestIDKey")
 )
 

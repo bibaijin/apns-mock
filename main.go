@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"syscall"
 
+	"github.com/bibaijin/apns-mock/log"
 	"github.com/go-zoo/bone"
-	"gitlab.yxapp.in/common-services/apns-mock/log"
 )
 
 var (
@@ -39,8 +39,8 @@ func main() {
 	}
 
 	go func() {
-		if err := server.ListenAndServeTLS(*certfile, *keyfile); err != nil {
-			log.Errorf(CTX, "server.ListenAndServeTLS() failed, error: %s.", err)
+		if err := server.ListenAndServe(); err != nil {
+			log.Errorf(CTX, "server.ListenAndServe() failed, error: %s.", err)
 		}
 	}()
 	defer func() {
@@ -48,6 +48,7 @@ func main() {
 			log.Errorf(CTX, "server.Shutdown() failed, error: %s.", err)
 		}
 	}()
+	log.Infof(CTX, "server.ListenAndServe()..., port: %d.", *port)
 
 	<-quit
 	log.Infof(CTX, "Shutting down.")

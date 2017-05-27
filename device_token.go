@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/bibaijin/apns-mock/log"
 	"github.com/go-zoo/bone"
-	"gitlab.yxapp.in/common-services/apns-mock/log"
 )
 
 // PostDeviceToken 向设备发送信息

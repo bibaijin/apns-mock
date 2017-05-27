@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"gitlab.yxapp.in/common-services/apns-mock/log"
+	"github.com/bibaijin/apns-mock/log"
 )
 
 type handler func(context.Context, http.ResponseWriter, *http.Request)
