@@ -29,16 +29,21 @@ func init() {
 // Fatalf 打印错误日志并退出
 func Fatalf(ctx context.Context, format string, v ...interface{}) {
 	if requestID := ctx.Value(RequestIDKey); requestID != nil {
-		format = fmt.Sprintf("RequestID: %s %s", requestID, format)
+		format = fmt.Sprintf("FATAL RequestID: %s %s", requestID, format)
+	} else {
+		format = fmt.Sprintf("FATAL %s", format)
 	}
 
 	errLogger.Output(2, fmt.Sprintf(format, v...))
+	os.Exit(1)
 }
 
 // Errorf 打印错误日志并退出
 func Errorf(ctx context.Context, format string, v ...interface{}) {
 	if requestID := ctx.Value(RequestIDKey); requestID != nil {
-		format = fmt.Sprintf("RequestID: %s %s", requestID, format)
+		format = fmt.Sprintf("ERROR RequestID: %s %s", requestID, format)
+	} else {
+		format = fmt.Sprintf("ERROR %s", format)
 	}
 
 	errLogger.Output(2, fmt.Sprintf(format, v...))
@@ -47,7 +52,9 @@ func Errorf(ctx context.Context, format string, v ...interface{}) {
 // Infof 打印错误日志并退出
 func Infof(ctx context.Context, format string, v ...interface{}) {
 	if requestID := ctx.Value(RequestIDKey); requestID != nil {
-		format = fmt.Sprintf("RequestID: %s %s", requestID, format)
+		format = fmt.Sprintf("INFO RequestID: %s %s", requestID, format)
+	} else {
+		format = fmt.Sprintf("INFO %s", format)
 	}
 
 	infoLogger.Output(2, fmt.Sprintf(format, v...))
