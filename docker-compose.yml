@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  apns-mock:
+    build: .
+    image: registry.laincloud.org/apns-mock
+    command: /apns-mock -port=8443 -certfile=/cert.pem -keyfile=/key.pem
+    ports:
+      - "8443:8443"
