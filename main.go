@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	port     = flag.Int("port", 8080, "The port to listen")
+	port     = flag.Int("port", 8443, "The port to listen")
 	certfile = flag.String("certfile", "cert.pem", "The cert file")
 	keyfile  = flag.String("keyfile", "key.pem", "The key file")
 	// CTX 表示顶级环境
@@ -39,8 +39,8 @@ func main() {
 	}
 
 	go func() {
-		if err := server.ListenAndServe(); err != nil {
-			log.Errorf(CTX, "server.ListenAndServe() failed, error: %s.", err)
+		if err := server.ListenAndServeTLS(*certfile, *keyfile); err != nil {
+			log.Errorf(CTX, "server.ListenAndServeTLS() failed, error: %s.", err)
 		}
 	}()
 	defer func() {
@@ -48,8 +48,8 @@ func main() {
 			log.Errorf(CTX, "server.Shutdown() failed, error: %s.", err)
 		}
 	}()
-	log.Infof(CTX, "server.ListenAndServe()..., port: %d.", *port)
+	log.Infof(CTX, "server.ListenAndServeTLS()..., port: %d.", *port)
 
 	<-quit
-	log.Infof(CTX, "Shutting down.")
+	log.Infof(CTX, "Shutting down...")
 }
